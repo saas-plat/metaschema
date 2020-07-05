@@ -48,7 +48,7 @@ describe('UI模板', () => {
     });
 
     // navbar
-    //console.log(v)
+     console.log(v)
     expect(v.items[0].title).to.be.equal('this is title');
     expect(v.items[0].type).to.be.equal('navbar');
     expect(v.items[0].items.length).to.be.equal(2);

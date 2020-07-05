@@ -7,7 +7,7 @@ const {
 
 describe('业务实体定义', () => {
 
-  it('元数据定义实体对象', async () => {
+  it('用元数据定义实体模型', async () => {
 
     const TestObj = BaseData('TestObj', {
       "Code": {
@@ -43,7 +43,129 @@ describe('业务实体定义', () => {
       }]
     });
 
-    console.log(TestObj)
+    //console.log(JSON.stringify(TestObj))
+    expect(JSON.parse(JSON.stringify(TestObj))).to.be.eql({
+      "name": "TestObj",
+      "schema": {
+        "type": "BaseEntity",
+        "fields": [{
+          "key": "Code",
+          "type": "string",
+          "rules": {
+            "type": "string",
+            "required": true,
+            "min": 1,
+            "max": 10,
+            "unique": true
+          }
+        }, {
+          "key": "Str1",
+          "type": "string",
+          "rules": {
+            "type": "string",
+            "length": 2,
+            "pattern": "[a-z]*"
+          }
+        }, {
+          "key": "Date",
+          "type": "date"
+        }, {
+          "key": "Value",
+          "type": "number",
+          "rules": {
+            "type": "number",
+            "enum": [100, 200]
+          }
+        }, {
+          "key": "Bool1",
+          "type": "boolean"
+        }, {
+          "key": "Ref",
+          "type": "reference",
+          "src": "Persion"
+        }, {
+          "key": "Ref1",
+          "type": "reference",
+          "rules": {
+            "type": "reference",
+            "reference": "TestReference1"
+          }
+        }, {
+          "key": "Obj1",
+          "type": "object",
+          "fields": [{
+            "key": "Code",
+            "type": "string"
+          }, {
+            "key": "Name",
+            "type": "string"
+          }]
+        }, {
+          "key": "Array1",
+          "type": "array",
+          "subtype": "object",
+          "fields": [{
+            "key": "Value",
+            "type": "number"
+          }, {
+            "key": "REF2",
+            "type": "reference",
+            "src": "TestReference2"
+          }]
+        }, {
+          "key": "id",
+          "type": "string"
+        }, {
+          "key": "status",
+          "type": "string",
+          "defValue": "invalid",
+          "rules": {
+            "type": "string"
+          }
+        }, {
+          "key": "createBy",
+          "type": "string"
+        }, {
+          "key": "createAt",
+          "type": "date"
+        }, {
+          "key": "updateBy",
+          "type": "string"
+        }, {
+          "key": "updateAt",
+          "type": "date"
+        }, {
+          "key": "deleteBy",
+          "type": "string"
+        }, {
+          "key": "deleteAt",
+          "type": "date"
+        }, {
+          "key": "ts",
+          "type": "string"
+        }, {
+          "key": "name",
+          "type": "string"
+        }, {
+          "key": "code",
+          "type": "string"
+        }, {
+          "key": "auditedBy",
+          "type": "string"
+        }, {
+          "key": "auditedAt",
+          "type": "date"
+        }],
+        "conflicts": [],
+        "mappings": {},
+        "references": {
+          "Ref": "Persion",
+          "Array1[].REF2": "TestReference2"
+        },
+        "actions": [],
+        "syskeys": ["eventsToEmit", "newEvents", "replaying", "_events", "_eventsCount", "_maxListeners", "snapshotVersion", "timestamp", "version", "_ns", "_id"]
+      }
+    })
   });
 
   it('实体支持字段名称映射，但是也不影响基类的写法', async () => {
@@ -59,9 +181,10 @@ describe('业务实体定义', () => {
       },
       "Code": "string"
     });
-    console.log(MappingObj.mappings).to.be.eql([
-
-    ])
+    expect(MappingObj.schema.mappings).to.be.eql({
+      "id": "ID",
+      "ts": "times"
+    })
   })
 
   it('可以通过schema定义一个自定义行为', async () => {
@@ -86,10 +209,9 @@ describe('业务实体定义', () => {
       }
     });
 
-    expect(TestSchemaActionObj.actions).to.be.eql([
+    expect(TestSchemaActionObj.schema.actions.map(it => it.key)).to.deep.include.members([
       'schemaAction1', 'schemaAction2', 'schemaAction3'
     ])
   })
-
 
 })

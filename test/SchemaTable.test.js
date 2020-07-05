@@ -7,12 +7,15 @@ const {
 const {
   expect
 } = require('chai');
+const {
+  Table
+} = require('../lib');
 
-describe('查询对象定义', () => {
+describe('查询模型定义', () => {
 
-  it('元数据定义查询对象，支持description等', async () => {
+  it('元数据定义查询模型，支持description等', async () => {
 
-    const TestModel = BaseTable( 'TestModel', {
+    const TestModel = Table('TestModel', {
       "id": "string",
       "Code": "string",
       "Str1": {
@@ -41,7 +44,7 @@ describe('查询对象定义', () => {
       description: '测试Model'
     });
     //const  {name, description, fields} = TestMode.schema.paths
-    expect(TestModel.schema.path('Str1').options.description).to.be.eq('这是一个字符串');
+    expect(TestModel.schema.fields.find(it=>it.key === 'Str1').description).to.be.eq('这是一个字符串');
     //console.log({name, description, fields})
 
   });

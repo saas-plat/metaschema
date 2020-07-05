@@ -9,7 +9,7 @@ describe('视图模型定义', () => {
 
   it('可以自定义视图模型', () => {
     // 所有字段，包括实体、过滤、按钮等都是字段
-    const json = ViewModel({
+    const VM1 = ViewModel('VM1', {
       code: {
         type: 'SimpleModel',
         fields: {
@@ -80,76 +80,129 @@ describe('视图模型定义', () => {
       }
     })
 
-    //console.log(JSON.stringify(json, null, 2))
-    expect(json).to.be.eql({
-      "code": {
+  //  console.log(JSON.stringify(VM1.schema.fields, null, 2))
+    expect(JSON.parse(JSON.stringify(VM1.schema.fields))).to.be.eql([{
+        "key": "code",
         "type": "SimpleModel",
-        "fields": {
-          "lable": {
+        "fields": [{
+            "key": "lable",
             "type": "string",
-            "default": "编码"
+            "defValue": "编码",
+            "rules": {
+              "type": "string"
+            }
           },
-          "visible": {
+          {
+            "key": "visible",
             "type": "boolean",
-            "default": true
+            "defValue": true,
+            "rules": {
+              "type": "boolean"
+            }
           },
-          "disable": {
+          {
+            "key": "disable",
             "type": "boolean",
-            "default": false
+            "rules": {
+              "type": "boolean"
+            }
           },
-          "default": {
-            "type": "string"
+          {
+            "key": "default",
+            "type": "string",
+            "rules": {
+              "type": "string"
+            }
           }
+        ],
+        "rules": {
+          "type": "object"
         }
       },
-      "details": {
+      {
+        "key": "details",
         "type": "TableModel",
-        "fields": {
-          "code": {
-            "type": "SimpleModel",
-            "fields": {
-              "lable": {
-                "type": "string",
-                "default": "编码"
-              },
-              "visible": {
-                "type": "boolean",
-                "default": true
-              },
-              "disable": {
-                "type": "boolean",
-                "default": false
-              },
-              "default": {
+        "fields": [{
+          "key": "code",
+          "type": "SimpleModel",
+          "fields": [{
+              "key": "lable",
+              "type": "string",
+              "defValue": "编码",
+              "rules": {
+                "type": "string"
+              }
+            },
+            {
+              "key": "visible",
+              "type": "boolean",
+              "defValue": true,
+              "rules": {
+                "type": "boolean"
+              }
+            },
+            {
+              "key": "disable",
+              "type": "boolean",
+              "rules": {
+                "type": "boolean"
+              }
+            },
+            {
+              "key": "default",
+              "type": "string",
+              "rules": {
                 "type": "string"
               }
             }
+          ],
+          "rules": {
+            "type": "object"
           }
+        }],
+        "rules": {
+          "type": "object"
         }
       },
-      "search": {
+      {
+        "key": "search",
         "type": "FilterModel",
-        "fields": {}
+        "fields": [],
+        "rules": {
+          "type": "object"
+        }
       },
-      "btn1": {
+      {
+        "key": "btn1",
         "type": "SimpleModel",
-        "fields": {
-          "text": {
+        "fields": [{
+            "key": "text",
             "type": "string",
-            "default": "按钮1"
+            "defValue": "按钮1",
+            "rules": {
+              "type": "string"
+            }
           },
-          "visible": {
+          {
+            "key": "visible",
             "type": "boolean",
-            "default": true
+            "defValue": true,
+            "rules": {
+              "type": "boolean"
+            }
           },
-          "disable": {
+          {
+            "key": "disable",
             "type": "boolean",
-            "default": false
+            "rules": {
+              "type": "boolean"
+            }
           }
+        ],
+        "rules": {
+          "type": "object"
         }
       }
-    })
+    ])
   })
-
-
 })

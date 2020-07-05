@@ -4,22 +4,24 @@ const {
 const {
   Rule
 } = require('../lib');
+require('i18next').init();
 
 describe('业务规则定义', () => {
+  const then = (facts) => {
+    // i18n执行时在闭包里解构
+    api.i18n.t('xxxxxxxxx');
+    facts.called.count++;
+  }
+  const p1 = ({
+    n1
+  }) => n1 == 1;
+  const p2 = ({
+    s1
+  }) => s1 == 'hello';
+  const p3 = facts => facts.d1.getDate() == new Date().getDate();
 
   it('定义一个规则', () => {
-    const then = (facts) => {
-      // i18n执行时在闭包里解构
-      api.i18n.t('xxxxxxxxx');
-      facts.called.count++;
-    }
-    const p1 = ({
-      n1
-    }) => n1 == 1;
-    const p2 = ({
-      s1
-    }) => s1 == 'hello';
-    const p3 = facts => facts.d1.getDate() == new Date().getDate();
+
     const rule = Rule('xxxx rule', [{
       "n1": Number,
       "pattern": p1
@@ -95,4 +97,29 @@ describe('业务规则定义', () => {
     ])
 
   })
+
+  it('支持数组约束定义', () => {
+    const rule = Rule('bbb rule', [
+      ["or",
+        ["not", Number, "n1", p1],
+        ["not", String, "s1", p2],
+        ["not", Date, "d1", p3]
+      ],
+      ["Count", "called"]
+    ], then)
+
+    expect(rule.name).to.be.eql('bbb rule');
+    expect(rule.then).to.be.eql(then)
+    console.log(rule.when)
+    expect(rule.when).to.deep.include.members([
+      ["or",
+        ["not", Number, "n1", p1],
+        ["not", String, "s1", p2],
+        ["not", Date, "d1", p3]
+      ],
+      ["Count", "called"]
+    ])
+
+  })
+
 })
