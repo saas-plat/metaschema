@@ -6,8 +6,8 @@
 **业务实体:**
 - Entity  
 - BaseData  
-- - CompositeData
-CategoryTree  
+- CompositeData
+- CategoryTree  
 - CategoryData
 - LevelData
 
