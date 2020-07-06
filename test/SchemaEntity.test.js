@@ -242,4 +242,20 @@ describe('业务实体定义', () => {
       childs: ["BaseEntity4"],
     });
   })
+
+  it('映射字段,方便获取系统字段', async () => {
+    const Tree = CategoryTree('EntityTree2', {
+      "Code": "string",
+      aaa: {
+        mapping: 'parent',
+        type: "EntityTree"
+      },
+      childs: ["EntityTree"],
+      details: ['BaseEntity3'],
+    });
+
+    const obj = {};
+    Tree.schema.createMappingProps(obj)
+    expect('parent' in obj).to.be.true;
+  });
 })
