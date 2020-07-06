@@ -2,9 +2,10 @@ const {
   expect
 } = require('chai');
 const {
-  BaseData
-  BaseEntity,
+  Entity,
+  BaseData,
   CompositeData,
+  CategoryTree,
   CategoryData,
   LevelData
 } = require('../lib');
@@ -51,7 +52,7 @@ describe('业务实体定义', () => {
     expect(JSON.parse(JSON.stringify(TestObj))).to.be.eql({
       "name": "TestObj",
       "schema": {
-        "type": "BaseEntity",
+        "type": "BaseData",
         "fields": [{
           "key": "Code",
           "type": "string",
@@ -219,17 +220,26 @@ describe('业务实体定义', () => {
   })
 
   it('更多的类型', async () => {
-    BaseEntity('BaseEntity1', {
+    Entity('BaseEntity1', {
       "Code": "string"
     });
     CompositeData('BaseEntity2', {
       "Code": "string"
     });
+    CategoryTree('EntityTree', {
+      "Code": "string",
+      parent: "EntityTree",
+      childs: ["EntityTree"],
+      details: ['BaseEntity3'],
+    });
     CategoryData('BaseEntity3', {
-      "Code": "string"
+      "Code": "string",
+      category: 'EntityTree'
     });
     LevelData('BaseEntity4', {
-      "Code": "string"
+      "Code": "string",
+      parent: "BaseEntity4",
+      childs: ["BaseEntity4"],
     });
   })
 })
