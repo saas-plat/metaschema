@@ -3,6 +3,10 @@ const {
 } = require('chai');
 const {
   BaseData
+  BaseEntity,
+  CompositeData,
+  CategoryData,
+  LevelData
 } = require('../lib');
 
 describe('业务实体定义', () => {
@@ -214,4 +218,18 @@ describe('业务实体定义', () => {
     ])
   })
 
+  it('更多的类型', async () => {
+    BaseEntity('BaseEntity1', {
+      "Code": "string"
+    });
+    CompositeData('BaseEntity2', {
+      "Code": "string"
+    });
+    CategoryData('BaseEntity3', {
+      "Code": "string"
+    });
+    LevelData('BaseEntity4', {
+      "Code": "string"
+    });
+  })
 })
