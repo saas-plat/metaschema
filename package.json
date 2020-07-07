@@ -1,6 +1,6 @@
 {
   "name": "@saas-plat/metaschema",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "一种用javascript语言来定义元数据的模式",
   "main": "lib/index.js",
   "browser": "dist/index.js",
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/saas-plat/metarule.git"
+    "url": "git+https://github.com/saas-plat/metaschema.git"
   },
   "keywords": [
     "meta",
@@ -25,9 +25,9 @@
   "author": "saas-plat.com",
   "license": "MPL-2.0",
   "bugs": {
-    "url": "https://github.com/saas-plat/metarule/issues"
+    "url": "https://github.com/saas-plat/metaschema/issues"
   },
-  "homepage": "https://github.com/saas-plat/metarule#readme",
+  "homepage": "https://github.com/saas-plat/metaschema#readme",
   "dependencies": {
     "automapper": "^1.0.0",
     "moment": "^2.20.1",
