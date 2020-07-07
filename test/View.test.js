@@ -180,6 +180,7 @@ describe('UI模板', () => {
           "type": "navbar",
           "title": "this is title",
           "items": [{
+            "key": "button2",
             "type": "button",
             "name": "search",
             "text": "保存",
@@ -189,6 +190,7 @@ describe('UI模板', () => {
               "args": {}
             }
           }, {
+            "key": "button3",
             "type": "button",
             "name": "save",
             "text": "保存1",
@@ -199,11 +201,14 @@ describe('UI模板', () => {
             }
           }]
         }, {
+          "key": "view4",
           "type": "view",
           "items": [{
+            "key": "list5",
             "type": "list",
             "title": "header 1",
             "items": [{
+              "key": "decimal6",
               "type": "decimal",
               "text": "item1",
               "value": "$item1",
@@ -212,6 +217,7 @@ describe('UI模板', () => {
                 "args": {}
               }
             }, {
+              "key": "decimal7",
               "type": "decimal",
               "text": "item2",
               "value": "$item1"
