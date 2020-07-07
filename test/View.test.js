@@ -166,58 +166,61 @@ describe('UI模板', () => {
           name: 'save',
           text: '保存1'
         }]
-      }]
+      }],
+      "onLoaded": ["loaded1", "loaded2"]
     });
     console.log(JSON.stringify(v))
 
     expect(JSON.parse(JSON.stringify(v))).to.be.eql({
       "root": {
-        "key": "view1",
+        "key": "view7",
         "type": "view",
         "layout": "topbottom",
+        "onLoaded": [{
+          "name": "loaded1",
+        }, {
+          "name": "loaded2",
+        }],
         "items": [{
           "key": "nav1",
           "type": "navbar",
           "title": "this is title",
           "items": [{
-            "key": "button2",
+            "key": "button1",
             "type": "button",
             "name": "search",
             "text": "保存",
             "icon": "search",
             "onClick": {
               "name": "dosamething",
-              "args": {}
             }
           }, {
-            "key": "button3",
+            "key": "button2",
             "type": "button",
             "name": "save",
             "text": "保存1",
             "icon": "search",
             "onClick": {
               "name": "dosamething",
-              "args": {}
             }
           }]
         }, {
-          "key": "view4",
+          "key": "view6",
           "type": "view",
           "items": [{
             "key": "list5",
             "type": "list",
             "title": "header 1",
             "items": [{
-              "key": "decimal6",
+              "key": "decimal3",
               "type": "decimal",
               "text": "item1",
               "value": "$item1",
               "onChange": {
                 "name": "action1",
-                "args": {}
               }
             }, {
-              "key": "decimal7",
+              "key": "decimal4",
               "type": "decimal",
               "text": "item2",
               "value": "$item1"
