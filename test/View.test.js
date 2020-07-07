@@ -4,9 +4,10 @@ const {
 const {
   View
 } = require('../lib');
+const V = require('../lib/View');
 const {
   loadJxon
-} = require('../lib/View');
+} = V;
 
 describe('UI模板', () => {
 
@@ -45,10 +46,10 @@ describe('UI模板', () => {
           }]
         }]
       }]
-    });
+    }).root;
 
     // navbar
-     console.log(v)
+    console.log(v)
     expect(v.items[0].title).to.be.equal('this is title');
     expect(v.items[0].type).to.be.equal('navbar');
     expect(v.items[0].items.length).to.be.equal(2);
@@ -118,6 +119,116 @@ describe('UI模板', () => {
     expect(jx[1].items.items[0].input).to.be.equal('decimal');
     expect(jx[1].items.items[0].text).to.be.equal('item 1');
 
+  })
+
+  it('支持视图模板合并', () => {
+    const v = V.View.create({
+      type: 'view',
+      layout: 'topbottom',
+      items: [{
+        key: 'nav1',
+        type: 'navbar',
+        items: [{
+          type: 'button',
+          name: 'save',
+          text: '保存'
+        }]
+      }, {
+        type: 'view',
+        items: [{
+          type: 'list',
+          //layout: 'list',
+          title: 'header 1',
+          items: [{
+            type: 'decimal',
+            text: 'item1',
+            value: '$item1',
+            onChange: 'action1'
+          }, {
+            type: 'decimal',
+            text: 'item2',
+            value: '$item1'
+          }]
+        }]
+      }]
+    }, {
+      type: 'view',
+      items: [{
+        key: 'nav1',
+        title: 'this is title',
+        items: [{
+          type: 'button',
+          name: 'search',
+          icon: 'search',
+          onClick: 'dosamething'
+        }, {
+          type: 'button',
+          name: 'save',
+          text: '保存1'
+        }]
+      }],
+      "onLoaded": ["loaded1", "loaded2"]
+    });
+    console.log(JSON.stringify(v))
+
+    expect(JSON.parse(JSON.stringify(v))).to.be.eql({
+      "root": {
+        "key": "view7",
+        "type": "view",
+        "layout": "topbottom",
+        "onLoaded": [{
+          "name": "loaded1",
+        }, {
+          "name": "loaded2",
+        }],
+        "items": [{
+          "key": "nav1",
+          "type": "navbar",
+          "title": "this is title",
+          "items": [{
+            "key": "button1",
+            "type": "button",
+            "name": "search",
+            "text": "保存",
+            "icon": "search",
+            "onClick": {
+              "name": "dosamething",
+            }
+          }, {
+            "key": "button2",
+            "type": "button",
+            "name": "save",
+            "text": "保存1",
+            "icon": "search",
+            "onClick": {
+              "name": "dosamething",
+            }
+          }]
+        }, {
+          "key": "view6",
+          "type": "view",
+          "items": [{
+            "key": "list5",
+            "type": "list",
+            "title": "header 1",
+            "items": [{
+              "key": "decimal3",
+              "type": "decimal",
+              "text": "item1",
+              "value": "$item1",
+              "onChange": {
+                "name": "action1",
+              }
+            }, {
+              "key": "decimal4",
+              "type": "decimal",
+              "text": "item2",
+              "value": "$item1"
+            }]
+          }]
+        }]
+      }
+    })
   })
 
 })
