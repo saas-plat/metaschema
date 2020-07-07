@@ -4,9 +4,10 @@ const {
 const {
   View
 } = require('../lib');
+const V = require('../lib/View');
 const {
   loadJxon
-} = require('../lib/View');
+} = V;
 
 describe('UI模板', () => {
 
@@ -48,12 +49,12 @@ describe('UI模板', () => {
     });
 
     // navbar
-     console.log(v)
-    expect(v.items[0].title).to.be.equal('this is title');
+    console.log(v)
+    expect(v.items[0].props.title).to.be.equal('this is title');
     expect(v.items[0].type).to.be.equal('navbar');
     expect(v.items[0].items.length).to.be.equal(2);
     //console.log(v.items[0].items[0].onClick)
-    expect(v.items[0].items[0].onClick.name).to.be.equal('dosamething');
+    expect(v.items[0].items[0].props.onClick.name).to.be.equal('dosamething');
 
     // voucher
     //console.log(v.items[1].onLoad.args)
@@ -61,7 +62,7 @@ describe('UI模板', () => {
 
     // container
     //expect(v.items[1].items[0].layout).to.be.equal('list');
-    expect(v.items[1].items[0].title).to.be.equal('header 1');
+    expect(v.items[1].items[0].props.title).to.be.equal('header 1');
 
     // formitem
     //console.log(v.items[1].items[0].items[0])
@@ -78,10 +79,10 @@ describe('UI模板', () => {
     // expect(v.items[1].items[0].items[0].defaultValue).to.be.equal(undefined);
     // expect(v.items[1].items[0].items[0].error).to.be.equal(true);
     // expect(v.items[1].items[0].items[0].extra).to.be.equal(undefined);
-    expect(v.items[1].items[0].items[0].text).to.be.equal('item1');
-    expect(v.items[1].items[0].items[0].value).to.be.equal('$item1');
+    expect(v.items[1].items[0].items[0].props.text).to.be.equal('item1');
+    expect(v.items[1].items[0].items[0].props.value).to.be.equal('$item1');
     //console.log(v.items[1].items[0].items[0].onChange)
-    expect(v.items[1].items[0].items[0].onChange.name).to.be.equal('action1');
+    expect(v.items[1].items[0].items[0].props.onChange.name).to.be.equal('action1');
 
   })
 
@@ -118,6 +119,137 @@ describe('UI模板', () => {
     expect(jx[1].items.items[0].input).to.be.equal('decimal');
     expect(jx[1].items.items[0].text).to.be.equal('item 1');
 
+  })
+
+  it('支持视图模板合并', () => {
+    const v = V.View.create({
+      type: 'view',
+      layout: 'topbottom',
+      items: [{
+        key: 'nav1',
+        type: 'navbar',
+        items: [{
+          type: 'button',
+          name: 'save',
+          text: '保存'
+        }]
+      }, {
+        type: 'view',
+        items: [{
+          type: 'list',
+          //layout: 'list',
+          title: 'header 1',
+          items: [{
+            type: 'decimal',
+            text: 'item1',
+            value: '$item1',
+            onChange: 'action1'
+          }, {
+            type: 'decimal',
+            text: 'item2',
+            value: '$item1'
+          }]
+        }]
+      }]
+    }, {
+      type: 'view',
+      items: [{
+        key: 'nav1',
+        title: 'this is title',
+        items: [{
+          type: 'button',
+          name: 'search',
+          icon: 'search',
+          onClick: 'dosamething'
+        }, {
+          type: 'button',
+          name: 'save',
+          text: '保存1'
+        }]
+      }]
+    });
+    //console.log(JSON.stringify(v))
+
+    expect(JSON.parse(JSON.stringify(v))).to.be.eql({
+      "key": "view1",
+      "type": "view",
+      "bind": null,
+      "props": {
+        "layout": "topbottom"
+      },
+      "items": [{
+        "key": "nav1",
+        "type": "navbar",
+        "bind": null,
+        "props": {
+          "title": "this is title"
+        },
+        "items": [{
+          "key": "button2",
+          "type": "button",
+          "bind": null,
+          "props": {
+            "name": "search",
+            "text": "保存",
+            "icon": "search",
+            "onClick": {
+              "type": "SimpleModel",
+              "name": "dosamething",
+              "args": {}
+            }
+          },
+        }, {
+          "key": "button3",
+          "type": "button",
+          "bind": null,
+          "props": {
+            "name": "save",
+            "text": "保存1",
+            "icon": "search",
+            "onClick": {
+              "type": "SimpleModel",
+              "name": "dosamething",
+              "args": {}
+            }
+          },
+        }]
+      }, {
+        "key": "view4",
+        "type": "view",
+        "bind": null,
+        "props": {},
+        "items": [{
+          "key": "list5",
+          "type": "list",
+          "bind": null,
+          "props": {
+            "title": "header 1"
+          },
+          "items": [{
+            "key": "decimal6",
+            "type": "decimal",
+            "bind": null,
+            "props": {
+              "text": "item1",
+              "value": "$item1",
+              "onChange": {
+                "type": "SimpleModel",
+                "name": "action1",
+                "args": {}
+              }
+            }
+          }, {
+            "key": "decimal7",
+            "type": "decimal",
+            "bind": null,
+            "props": {
+              "text": "item2",
+              "value": "$item1"
+            }
+          }]
+        }]
+      }]
+    })
   })
 
 })
