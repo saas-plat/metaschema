@@ -185,7 +185,6 @@ describe('UI模板', () => {
             "text": "保存",
             "icon": "search",
             "onClick": {
-              "type": "SimpleModel",
               "name": "dosamething",
               "args": {}
             }
@@ -195,7 +194,6 @@ describe('UI模板', () => {
             "text": "保存1",
             "icon": "search",
             "onClick": {
-              "type": "SimpleModel",
               "name": "dosamething",
               "args": {}
             }
@@ -210,7 +208,6 @@ describe('UI模板', () => {
               "text": "item1",
               "value": "$item1",
               "onChange": {
-                "type": "SimpleModel",
                 "name": "action1",
                 "args": {}
               }
