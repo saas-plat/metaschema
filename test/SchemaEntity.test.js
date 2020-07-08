@@ -219,6 +219,36 @@ describe('业务实体定义', () => {
     ])
   })
 
+  it('可以通过schema定义一个自定义校验行为', async () => {
+    const TestSchemaValidatorObj = BaseData('TestSchemaValidatorObj', {
+      "Field1": {
+        type: "string",
+        // 简写
+        validator: (rule, value) => {
+          console.log('validator1')
+        },
+      },
+      "Field2": {
+        type: "string",
+        // schema类型定义
+        validator: `console.log('validator2') `
+      },
+      "Field3": {
+        type: "string",
+        // 字符串数据定义
+        validator: [`console.log('validator3')`, 'value === "3"']
+      }
+    });
+    //console.log(TestSchemaValidatorObj.schema.fields)
+    expect(TestSchemaValidatorObj.schema.fields
+      .filter(it => ['Field1', 'Field2', 'Field3'].indexOf(it.key) > -1)
+      .map(it => it.rules.validator.toString())).to.deep.include.members([
+      "(rule, value) => {\n          console.log('validator1')\n        }",
+      "function anonymous(undefined\n) {\nreturn console.log('validator2') \n}",
+      "function anonymous(undefined\n) {\nconsole.log('validator3')\nreturn value === \"3\"\n}"
+    ])
+  })
+
   it('更多的类型', async () => {
     Entity('BaseEntity1', {
       "Code": "string"

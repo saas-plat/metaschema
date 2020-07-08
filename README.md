@@ -39,16 +39,37 @@ import {
 
 export default BaseData('BankAccount',  {
   Code: {
-    mapping: 'code'
+    mapping: 'code',
+    validator: (rule, value)=>{
+      return !!value;
+    }
   },
   Name: String,
   NewBalance: Number,
   // ------------ actions -----------------
-  customAction1: async () => {
-
+  customAction1: async (data) => {
+    ...
   }
 })
 
+```
+
+
+## 自定义行为定义
+this指向模型实例
+```js
+action(...args){
+  ...
+}
+```
+
+## 自定义校验定义
+接收5个参数，分别是规则定义，待验证值，数据源，选项，上下文，this指向模型实例
+返回false校验失败
+```js
+validator(rule, value, source, options, context){
+  return true
+}
 ```
 
 ## schemas是可以扩展的
