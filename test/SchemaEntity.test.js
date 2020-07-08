@@ -243,9 +243,9 @@ describe('业务实体定义', () => {
     expect(TestSchemaValidatorObj.schema.fields
       .filter(it => ['Field1', 'Field2', 'Field3'].indexOf(it.key) > -1)
       .map(it => it.rules.validator.toString())).to.deep.include.members([
-      "(rule, value) => {\n          console.log('validator1')\n        }",
-      "function anonymous(undefined\n) {\nreturn console.log('validator2') \n}",
-      "function anonymous(undefined\n) {\nconsole.log('validator3')\nreturn value === \"3\"\n}"
+       "(rule, value) => {\r\n          console.log('validator1')\r\n        }",
+      "function anonymous(rule,value,source,options,context\n) {\nreturn console.log('validator2') \n}",
+      "function anonymous(rule,value,source,options,context\n) {\nconsole.log('validator3')\nreturn value === \"3\"\n}"
     ])
   })
 
