@@ -80,7 +80,7 @@ describe('视图模型定义', () => {
       }
     })
 
-  //  console.log(JSON.stringify(VM1.schema.fields, null, 2))
+    // console.log(JSON.stringify(VM1.schema.fields))
     expect(JSON.parse(JSON.stringify(VM1.schema.fields))).to.be.eql([{
         "key": "code",
         "type": "SimpleModel",
