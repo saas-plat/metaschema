@@ -5,7 +5,11 @@ const {
   Schema,
   Types
 } = require('../lib');
+const {
+  addTypeCreator
+} = require('../lib/Schema');
 const BaseData = require('../lib/schemas/tables/BaseTable');
+const BaseModel = require('../lib/schemas/vms/BaseModel');
 
 describe('模型架构', () => {
 
@@ -69,5 +73,43 @@ describe('模型架构', () => {
       "references": {},
       "syskeys": ["_id", "_ns"]
     })
+  })
+
+  it('扩展type的构建器', () => {
+    let inCreator = false;
+    let hasStore = false;
+    addTypeCreator('SimpleModel', (it, defineObj, {
+      store
+    }) => {
+      inCreator = true;
+      hasStore = !!store;
+      defineObj[it.key] = {};
+      return true;
+    });
+
+    const Partner = Schema.create(BaseModel, {
+      // 字段
+      "id": {
+        "type": "SimpleModel",
+        "fields": {
+          "lable": {
+            "type": "string",
+            "default": "ID"
+          },
+          "value": "string",
+          "dataSouce": {
+            "type": "string",
+            "default": "aa.pertner"
+          },
+        }
+      }
+    });
+
+    const obj = Partner.createObject({
+      store: true
+    });
+    expect(obj.id).to.be.eql({});
+    expect(inCreator).to.be.true;
+    expect(hasStore).to.be.true;
   })
 })
