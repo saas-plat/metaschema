@@ -12,7 +12,7 @@ const {
 describe('UI模板', () => {
 
   it('可以自定义UI模板', () => {
-    const v = View({
+    const v = View('',{
       type: 'view',
       layout: 'topbottom',
       items: [{
@@ -122,7 +122,7 @@ describe('UI模板', () => {
   })
 
   it('支持视图模板合并', () => {
-    const v = V.View.create({
+    const v = V.View.create('',{
       type: 'view',
       layout: 'topbottom',
       items: [{
@@ -172,6 +172,7 @@ describe('UI模板', () => {
     console.log(JSON.stringify(v))
 
     expect(JSON.parse(JSON.stringify(v))).to.be.eql({
+      name: '',
       "root": {
         "key": "view7",
         "type": "view",
