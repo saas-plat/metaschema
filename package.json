@@ -30,31 +30,31 @@
   "homepage": "https://github.com/saas-plat/metaschema#readme",
   "dependencies": {
     "automapper": "^1.0.0",
-    "moment": "^2.20.1",
     "jxon": "^2.0.0-beta.5",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.19",
+    "moment": "^2.20.1"
   },
   "peerDependencies": {
     "i18next": ">=19.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.0",
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.10.5",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/plugin-proposal-decorators": "^7.8.3",
+    "@babel/plugin-proposal-decorators": "^7.10.5",
     "@babel/plugin-proposal-export-default-from": "^7.8.3",
-    "@babel/plugin-transform-runtime": "^7.9.0",
+    "@babel/plugin-transform-runtime": "^7.10.5",
     "@babel/preset-env": "^7.9.0",
     "@babel/preset-react": "^7.9.4",
-    "@babel/register": "^7.9.0",
-    "@babel/runtime": "^7.9.2",
+    "@babel/register": "^7.10.5",
+    "@babel/runtime": "^7.10.5",
     "babel-eslint": "^10.1.0",
     "chai": "^4.2.0",
+    "conventional-changelog-cli": "^2.0.34",
     "cross-env": "^6.0.3",
     "eslint": "^6.8.0",
     "eslint-plugin-react": "^7.17.0",
-    "conventional-changelog-cli": "^2.0.34",
-    "i18next": "^19.5.4",
+    "i18next": "^19.6.2",
     "mocha": "^7.1.1"
   }
 }
