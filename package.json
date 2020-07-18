@@ -1,6 +1,6 @@
 {
   "name": "@saas-plat/metaschema",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "一种用javascript语言来定义元数据的模式",
   "main": "lib/index.js",
   "browser": "dist/index.js",
@@ -51,7 +51,7 @@
     "chai": "^4.2.0",
     "conventional-changelog-cli": "^2.0.34",
     "cross-env": "^6.0.3",
-    "eslint": "^6.8.0", 
+    "eslint": "^6.8.0",
     "i18next": "^19.6.2",
     "mocha": "^7.1.1"
   }
