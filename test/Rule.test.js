@@ -152,7 +152,7 @@ describe('业务规则定义', () => {
       console.log('update to 2.0.0');
     });
     expect(rule.when).to.deep.include.members(
-      ["Action", "e", condition]
+      [["Action", "e", condition]]
     )
   })
 })

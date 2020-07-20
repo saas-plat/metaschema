@@ -1,6 +1,6 @@
 {
   "name": "@saas-plat/metaschema",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "一种用javascript语言来定义元数据的模式",
   "main": "lib/index.js",
   "browser": "dist/index.js",
