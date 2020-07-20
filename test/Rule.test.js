@@ -143,4 +143,16 @@ describe('业务规则定义', () => {
     }, 'industry2', 'industry3')).to.be.true;
   })
 
+  it('支持的when写法', () => {
+    const condition = e => e.name == 'Department.migrate' && e.event == 'saved' && versionAt(e, '2.0.0');
+    const rule = Rule('update_sciprt1', {
+      e: 'Action',
+      condition
+    }, () => {
+      console.log('update to 2.0.0');
+    });
+    expect(rule.when).to.deep.include.members(
+      ["Action", "e", condition]
+    )
+  })
 })
