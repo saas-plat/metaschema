@@ -2,7 +2,9 @@ const {
   expect
 } = require('chai');
 const {
-  Rule
+  Rule,
+  versionAt,
+  seriesIn
 } = require('../lib');
 require('i18next').init();
 
@@ -120,6 +122,25 @@ describe('业务规则定义', () => {
       ["Count", "called"]
     ])
 
+  })
+
+  it('函数versionAt和seriesIn支持升级判断', () => {
+    expect(versionAt({}, '3.0.0')).to.be.false;
+    expect(versionAt({
+      from: '1.0.0',
+      to: '2.0.0'
+    }, '3.0.0')).to.be.false;
+    expect(versionAt({
+      from: '2.0.0',
+      to: '3.0.0'
+    }, '3.0.0')).to.be.true;
+    expect(seriesIn({}, 'industry2', 'industry3')).to.be.false;
+    expect(seriesIn({
+      series: 'sss'
+    }, 'industry2', 'industry3')).to.be.false;
+    expect(seriesIn({
+      series: 'industry3'
+    }, 'industry2', 'industry3')).to.be.true;
   })
 
 })
