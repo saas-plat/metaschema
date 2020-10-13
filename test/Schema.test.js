@@ -35,7 +35,7 @@ describe('模型架构', () => {
     });
     // console.log(JSON.stringify(s))
     expect(JSON.parse(JSON.stringify(s))).to.be.eql({
-      "type": "BaseTable",
+      "type": "Table",
       "fields": [{
         "key": "Code",
         "type": "string",
