@@ -25,7 +25,7 @@ describe('计划任务', () => {
             year: undefined, month: undefined, date: undefined,
             dayOfWeek: undefined, hour: undefined, minute: undefined, second: 3
         });
-        expect(CustomSchedule.action).to.be.eql({ command, data })
+        expect(CustomSchedule.action).to.be.eql({ command: undefined, data: undefined })
         expect(CustomSchedule.job.name).to.be.eql('CustomJob')
         expect(CustomSchedule.options).to.be.eql(undefined)
     })
