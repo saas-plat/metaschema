@@ -51,18 +51,16 @@ const EditView = Template('View', {
       type: 'toolbar',
       items: [
         {          
-          name: 'save',
           type: 'button',
           icon: 'save',
           style: 'icon',
-          onClick: 'save',
+          bind: 'save',
         },
         {
-          name: 'delete',
           type: 'button',
           icon: 'delete',
           style: 'icon',
-          onClick: DeleteCommand,
+          bind: DeleteCommand,
         },
       ],
     },
