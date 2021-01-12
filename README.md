@@ -39,18 +39,12 @@ const BankAccount = Entity('BankAccount', {
   },
   Name: String,
   NewBalance: Number,
-  // ------------ actions -----------------
-  customAction1: async (data) => {
-    ...
-  }
 });
 
-const SaveCommand = Command('save', {
-  send: 'Save'
-});
+const SaveCommand = Command('save', {});
 const DeleteCommand = Command('delete', {});
 
-const EditView = Template('EditView', {
+const EditView = Template('View', {
   type: 'view',
   items: [
     {
@@ -61,14 +55,14 @@ const EditView = Template('EditView', {
           type: 'button',
           icon: 'save',
           style: 'icon',
-          onClick: SaveCommand,
+          onClick: 'save',
         },
         {
           name: 'delete',
           type: 'button',
           icon: 'delete',
           style: 'icon',
-          onClick: 'delete',
+          onClick: DeleteCommand,
         },
       ],
     },
@@ -89,10 +83,33 @@ const EditView = Template('EditView', {
   ],
 });
 
-export default Bill('BasicArchive',  {
-  templates: [EditView],
-  entities:  [BankAccount],
-  commands:  [SaveCommand, DeleteCommand]
+const SavingRule = Rule('saving rule', {
+  e: 'Action',
+  'condition': e => e.name == 'saveClick'  // 发生在前端业务规则
+}, (facts) => {
+  ...
+})
+
+const SaveRule = Rule('save rule', {
+  e: 'Command',
+  'condition': e => e.name == 'save'  // 发生在后端业务规则
+}, (facts) => {
+  ...
+})
+
+const SavedRule = Rule('saved rule', {
+  e: 'Event',
+  'condition': e => e.name == 'saved'  // 发生在后端业务事件
+}, (facts) => {
+  ...
+})
+
+export default Bill('BankAccountArchive',  {
+  type: 'BasicArchive',
+  templates: [ EditView ],
+  entities:  [ BankAccount ],
+  commands:  [ SaveCommand, DeleteCommand ],
+  rules: [ SavingRule, SaveRule, SavedRule ]
 })
 
 ```
