@@ -1,9 +1,8 @@
 # metaschema
 
 一种用 javascript 语言来定义元数据的模式  
-单据元数据是一种业务模型描述语言，只对业务模型、行为和规则进行描述， 
-运行时元数据会被编译/解释成技术平台对象执行。
-
+单据元数据是一种业务模型描述语言，只对业务模型、行为和规则进行描述，
+元数据会转换成多端协议格式返回给运行平台，运行平台会根据协议编译/解释成技术平台对象执行。
 
 ## 元数据类型
 
@@ -19,7 +18,25 @@
 | Command  | 命令 | 命令定义，执行时会触发规则                       |
 | Rule     | 规则 | 业务对象的改变、按钮、任务、命令执行都会触发规则 |
 
-定义一个基础档案
+## Bill
+
+## Entity
+
+## Query
+
+## Template
+
+## Filter
+
+## Toolbar
+
+## Schedule
+
+## Command
+
+## Rule
+
+## 定义一个单据
 
 ```js
 import {
@@ -50,7 +67,7 @@ const EditView = Template('View', {
     {
       type: 'toolbar',
       items: [
-        {          
+        {
           type: 'button',
           icon: 'save',
           style: 'icon',
@@ -111,3 +128,7 @@ export default Bill('BankAccountArchive',  {
 })
 
 ```
+
+## 定义打印模板
+
+## 定义一个报表
