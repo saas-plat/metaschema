@@ -12,6 +12,8 @@
 | View     | 视图 | 数据管理视图，由实体筛选而来                     |
 | Template | 模板 | 定义业务表单、数据管理、报表、自定义页面等的布局 |
 | Rule     | 规则 | 实体的改变、按钮、任务、外部接口都会触发规则     |
+| Schedule | 计划 | 定时触发规则的执行                               |
+| API      | 接口 | 外部接口触发规则的执行                           |
 
 ## 实体
 
@@ -40,8 +42,15 @@
     定时触发的任务，执行时会触发一组规则
   - API  
     第三方系统触发执行的规则
-- Action 动作
+- Task 动作
   编排一组业务动作，用来在满足条件时执行
+
+## 计划
+
+- 时间
+- 任务
+
+## 接口
 
 ## 定义一个单据
 
@@ -104,23 +113,25 @@ const EditView = Template('View', {
   ],
 });
 
-const SavingRule = Rule('xxx rule', {
-  e: 'Entity',
-  'condition': e => e.name == 'xxxx'   
-}, (facts) => {
-  ...
-})
+const SavingRule = Rule('xxx rule',
+  Condition('e', 'Entity', e => e.name == 'xxxx'),
+  series(
+    Task('details', 'getEntityList', 'e.details'),
+    Task('ref', 'getEntity', 'e.xxxxref'),
+    Task('sum', 'sumArray', 'details.xxxxField'),
+    Task('update', 'updateEntity', 'ref.total', 'sum')
+  ))
 
 const SaveRule = Rule('xxxx rule', {
   e: 'Job',
-  'condition': e => e.name == 'xxxx'   
+  'condition': e => e.name == 'xxxx'
 }, (facts) => {
   ...
 })
 
 const SavedRule = Rule('saved rule', {
   e: 'Api',
-  'condition': e => e.key == 'xxxx'   
+  'condition': e => e.key == 'xxxx'
 }, (facts) => {
   ...
 })
