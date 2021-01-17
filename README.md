@@ -1,5 +1,5 @@
 # metaschema
-一种用javascript语言来定义元数据的模式
+一种用javascript语言来定义多端协议格式
 
 ## 标准的模型
 
