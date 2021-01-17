@@ -1,68 +1,43 @@
 # metaschema
+一种用javascript语言来定义元数据的模式
 
-一种用 javascript 语言来定义元数据的模式  
-单据元数据是一种业务模型描述语言，只对业务模型、行为和规则进行描述，
-元数据会转换成多端协议格式返回给运行平台，运行平台会根据协议编译/解释成技术平台对象执行。
+## 标准的模型
 
-## 元数据类型
+**业务实体:**
+- Entity  
+- BaseData  
+- CompositeData
+- CategoryTree  
+- CategoryData
+- LevelData
 
-| 类型     | 名称 | 说明                                             |
-| -------- | ---- | ------------------------------------------------ |
-| Entity   | 实体 | 业务模型定义，包括显示和存储描述信息             |
-| View     | 视图 | 数据管理视图，由实体筛选而来                     |
-| Template | 模板 | 定义业务表单、数据管理、报表、自定义页面等的布局 |
-| Rule     | 规则 | 实体的改变、按钮、任务、外部接口都会触发规则     |
-| Schedule | 计划 | 定时触发规则的执行                               |
-| API      | 接口 | 外部接口触发规则的执行                           |
+**查询对象:**
+- Table  
+- DataTable
+- SumTable  
+- TreeTable  
+- UnionTable
 
-## 实体
+**视图模型:**
+- ViewModel  
+- FormModel  
+- FormListModel
+- TreeListModel
+- CardModel  
 
-## 视图
+UI模板:
+View
 
-- Filter 查询
-  对数据过滤器进行定义
-- Plan 方案
-  特定的查询方案
+业务规则:  
+Rule
 
-## 模板
-
-- Container 容器
-  布局容器，可以递归嵌套
-- Toolbar 按钮
-  自定义一组按钮，点击触发规则的执行
-- Command 命令
-  按钮执行
-
-## 规则
-
-- Condition 条件
-  - Entity
-    实体增删改时触发规则
-  - Job
-    定时触发的任务，执行时会触发一组规则
-  - API  
-    第三方系统触发执行的规则
-- Task 动作
-  编排一组业务动作，用来在满足条件时执行
-
-## 计划
-
-- 时间
-- 任务
-
-## 接口
-
-## 定义一个单据
-
+基于标准模型定义一个业务对象
 ```js
 import {
-  Entity,
-  Template,
-  Command,
-  Rule
+  BaseData,
 } from '@saas-plat/metaschema';
 
-const BankAccount = Entity('BankAccount', {
+export default BaseData('BankAccount',  {
   Code: {
     mapping: 'code',
     validator: (rule, value)=>{
@@ -71,75 +46,53 @@ const BankAccount = Entity('BankAccount', {
   },
   Name: String,
   NewBalance: Number,
-});
-
-const SaveCommand = Command('save', {});
-const DeleteCommand = Command('delete', {});
-
-const EditView = Template('View', {
-  type: 'view',
-  items: [
-    {
-      type: 'toolbar',
-      items: [
-        {
-          type: 'button',
-          icon: 'save',
-          style: 'icon',
-          onClick: 'save',
-        },
-        {
-          type: 'button',
-          icon: 'delete',
-          style: 'icon',
-          onClick: ()=> DeleteCommand.execute({arg1:'xxxxx}),
-        },
-      ],
-    },
-    {
-      type: 'view',
-      items: [
-        {
-          field: 'Code',
-        },
-        {
-          field: 'Name',
-        },
-        {
-          field: 'NewBalance',
-        },
-      ],
-    },
-  ],
-});
-
-const SavingRule = Rule('xxx rule',
-  Condition('e', 'Entity', e => e.name == 'xxxx'),
-  series(
-    Task('details', 'getEntityList', 'e.details'),
-    Task('ref', 'getEntity', 'e.xxxxref'),
-    Task('sum', 'sumArray', 'details.xxxxField'),
-    Task('update', 'updateEntity', 'ref.total', 'sum')
-  ))
-
-const SaveRule = Rule('xxxx rule', {
-  e: 'Job',
-  'condition': e => e.name == 'xxxx'
-}, (facts) => {
-  ...
-})
-
-const SavedRule = Rule('saved rule', {
-  e: 'Api',
-  'condition': e => e.key == 'xxxx'
-}, (facts) => {
-  ...
+  // ------------ actions -----------------
+  customAction1: async (data) => {
+    ...
+  }
 })
 
 ```
 
-## 定义打印模板
 
-## 定义一个报表
+## 自定义行为定义
+this指向模型实例
+```js
+action(...args){
+  ...
+}
+```
 
-## 自定义页面
+## 自定义校验定义
+接收5个参数，分别是规则定义，待验证值，数据源，选项，上下文，this指向模型实例
+返回false校验失败
+```js
+validator(rule, value, source, options, context){
+  return true
+}
+```
+
+## schemas是可以扩展的
+
+需要定义schema{name, types, syskeys, fields}
+```js
+const NewModel1 = () => require('./schemas/NewModel1');
+```
+
+封装Model的定义函数
+```js
+NewModel1 = (name, fields) => {
+  return new Model(name, Schema.create(NewModel1(), fields));
+}
+```
+
+开发者定义新模型
+```js
+import {
+  NewModel1,
+} from 'otherschema';
+
+export default NewModel1('xxxx',  {
+  ...
+})
+```
