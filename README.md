@@ -1,40 +1,50 @@
 # metaschema
-一种用javascript语言来定义多端协议格式  
 
-不仅提供了各端的模型描述，还支持通过js编写扩展规则的能力，
-现在支持领域、查询、视图等多层的定义和扩展能力。
+一种用 javascript 语言来定义开发模型架构
 
-## 标准的模型
+开发模型提供了更灵活、更专业的配置，还支持通过 js 编写扩展的能力，
+现在支持实体、查询、视图等多层的定义和规则扩展能力。
 
-**业务实体:**
-- Entity  
-- BaseData  
+## 模型
+
+### 实体:
+
+- Entity
+- BaseData
 - CompositeData
-- CategoryTree  
+- CategoryTree
 - CategoryData
 - LevelData
+- Enum
 
-**查询对象:**
-- Table  
+### 查询:
+
+- Table
 - DataTable
-- SumTable  
-- TreeTable  
+- SumTable
+- TreeTable
 - UnionTable
 
-**视图模型:**
-- ViewModel  
-- FormModel  
+## 模板:
+
+### 视图:
+
+### 模型:
+
+- ViewModel
+- FormModel
 - FormListModel
 - TreeListModel
-- CardModel  
+- CardModel
 
-UI模板:
-View
+## 规则:
 
-业务规则:  
-Rule
+### Rule
 
-基于标准模型定义一个业务对象
+## 定时任务: 
+
+## 基于标准模型定义一个业务对象
+
 ```js
 import {
   BaseData,
@@ -51,45 +61,53 @@ export default BaseData('BankAccount',  {
   NewBalance: Number,
   // ------------ actions -----------------
   customAction1: async (data) => {
+    const entity = this;
     ...
   }
 })
 
 ```
 
+### 自定义行为
 
-## 自定义行为定义
-this指向模型实例
+this 指向模型实例
+
 ```js
 action(...args){
-  ...
+  const entity = this;
 }
 ```
 
-## 自定义校验定义
-接收5个参数，分别是规则定义，待验证值，数据源，选项，上下文，this指向模型实例
-返回false校验失败
+### 自定义校验定义
+
+接收 5 个参数，分别是规则定义，待验证值，数据源，选项，上下文，this 指向模型实例
+返回 false 校验失败
+
 ```js
 validator(rule, value, source, options, context){
   return true
 }
 ```
 
-## schemas是可以扩展的
+## 高级
+schemas 是可以扩展的
 
-需要定义schema{name, types, syskeys, fields}
+需要定义 schema{name, types, syskeys, fields}
+
 ```js
 const NewModel1 = () => require('./schemas/NewModel1');
 ```
 
-封装Model的定义函数
+封装 Model 的定义函数
+
 ```js
 NewModel1 = (name, fields) => {
   return new Model(name, Schema.create(NewModel1(), fields));
-}
+};
 ```
 
 开发者定义新模型
+
 ```js
 import {
   NewModel1,
