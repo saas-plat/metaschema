@@ -1,7 +1,7 @@
 {
   "name": "@saas-plat/metaschema",
   "version": "1.0.21",
-  "description": "一种用javascript语言来定义元数据的模式",
+  "description": "用javascript语言进行元数据建模",
   "main": "lib/index.js",
   "browser": "dist/index.js",
   "directories": {
