@@ -31,7 +31,7 @@
   "dependencies": {
     "automapper": "^1.0.0",
     "jxon": "^2.0.0-beta.5",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "moment": "^2.20.1"
   },
   "peerDependencies": {
